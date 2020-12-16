@@ -69,13 +69,13 @@ import { Card, } from 'react-native-elements';
                 
                 <View style={{flexDirection:'row', justifyContent:'space-between',alignItems:'center'}}>
                   
-                  <Icon style={{marginRight:5,marginLeft:5}}
-                    name="search" color={'#333'} size={28} backgroundColor={"#08d4c4"}
+                <MaterialCommunityIcons style={{marginRight:5,marginLeft:5}}
+                    name="feature-search" color={'#fff'} size={28} backgroundColor={"#08d4c4"}
                     onPress={()=>this.props.navigation.navigate('SearchScreen')}
                     />
                    
                     <Icon style={{marginRight:20,marginLeft:5}}
-                    name="options" color={'#333'} size={28} backgroundColor={"#08d4c4"}
+                    name="options" color={'#fff'} size={28} backgroundColor={"#08d4c4"}
                     onPress={()=>this.props.navigation.navigate('FilterScreen')}
                     />
                   
