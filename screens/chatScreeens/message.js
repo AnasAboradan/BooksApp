@@ -12,6 +12,7 @@ export default class Message extends React.Component{
       userId:global.userId,
       conversationId:this.props.route.params.conversationId,
       to_user_id:this.props.route.params.to_user_id,
+      to_user_name:this.props.route.params.username,
       DATA:'',
       message:'',
       Enable: true,
@@ -32,7 +33,7 @@ export default class Message extends React.Component{
  
    getmessage()
   {
-    console.log('1');
+   
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
      if (request.readyState !== 4) {
@@ -80,12 +81,7 @@ renderItem({item}){
   if(item.from_user!=this.state.userId)
     return(
         <View style={styles.item}>
-        <Avatar
-           size='medium'
-            rounded
-            source={{
-              uri:this.props.route.params.Image }}/>
-            <Text style={{ borderRadius:15,marginLeft:20, fontSize:18,backgroundColor:'#b30c81', padding:10, color:'#fff'}}>{item.message_text}</Text>
+          <Text style={{ borderRadius:15,marginLeft:0, fontSize:18,backgroundColor:'#b30c81', padding:10, color:'#fff'}}>{item.message_text}</Text>
        </View>
     )
     else return(
@@ -101,6 +97,17 @@ renderItem({item}){
   
     return (
       <View style={styles.contanier}>
+           <Header backgroundColor={'#08d4c4'}
+             centerComponent={{ text:this.state.to_user_name, style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
+             rightComponent={
+              <TouchableOpacity style={{zIndex:5}}>
+              <Avatar
+               size='medium'
+               rounded
+               source={{
+                 uri:this.props.route.params.Image }}/>
+                 </TouchableOpacity>}
+           />
 
         <View style={styles.messages}>
             <FlatList

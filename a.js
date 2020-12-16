@@ -14,6 +14,8 @@ function EditProfileScreen ()  {
   const bs = React.createRef();
  const fall = new Animated.Value(1);
  const TakeFoto=()  =>{
+  
+  
   ImagePicker.openCamera({
     width: 300,
     height: 400,

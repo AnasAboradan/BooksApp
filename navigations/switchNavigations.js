@@ -17,6 +17,7 @@ import MyProfile from '../screens/acountScreens/myProfile';
 import HelpAndSuport from '../screens/acountScreens/helpAndSuport';
 import Feedback from '../screens/acountScreens/feedback';
 import Wish from '../screens/acountScreens/wish';
+import BookShow from '../screens/acountScreens/bookShow';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer} from '@react-navigation/native';
@@ -42,7 +43,7 @@ const [userId,SetUserId]=useState('');
         headerBackTitleVisible:false,
         headerTitle:false,
         headerTransparent:true,
-        headerTintColor:'#fff'
+        headerTintColor:'black'
       })
         
       }/>
@@ -51,14 +52,22 @@ const [userId,SetUserId]=useState('');
         headerBackTitleVisible:false,
         headerTitle:true,
         headerTransparent:true,
-        headerTintColor:'#333'
+        headerTintColor:'#fff'
       })}/>
       
      
-      <RootStack.Screen name="MyBooks" component={MyBooks}  />
+      <RootStack.Screen name="MyBooks" component={MyBooks} 
+       options={{headerShown:false}} />
+      <RootStack.Screen name="BookShow" component={BookShow}
+       options={({route})=>({
+        headerBackTitleVisible:false,
+        headerTitle:false,
+        headerTransparent:true,
+        headerTintColor:'rgba(0,0,0,0.8)'
+      })}  />
       <RootStack.Screen name="MyProfile" component={MyProfile}  />
       <RootStack.Screen name="Feedback" component={Feedback}  />
-      <RootStack.Screen name="Wish" component={Wish}  />
+      <RootStack.Screen name="Wish" component={Wish}   options={{headerShown:false}} />
       <RootStack.Screen name="HelpAndSuport" component={HelpAndSuport}/>
 
 

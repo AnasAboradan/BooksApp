@@ -1,7 +1,7 @@
 import React, { useState, useEffect,Component } from 'react';
 import { Button, View, Text, StyleSheet,SafeAreaView,StatusBar } from 'react-native';
-import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ListItem, Avatar, Header } from 'react-native-elements';
 
 const list = [
   {
@@ -42,9 +42,10 @@ class Acount extends Component {
     return (
        <View style={styles.contanier}>
              <StatusBar backgroundColor="#08d4c4"/>
-                  <View style={{justifyContent:'center', alignItems:'center', height:80,paddingTop:10,borderBottomColor:'#333',borderBottomWidth:1}}>
-                    <Text style={{fontSize:30}}>My acount</Text>
-                  </View>
+             <Header backgroundColor={'#08d4c4'}
+             centerComponent={{ text: 'My acount', style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
+     
+    />
 
 <View>
   {

@@ -1,7 +1,11 @@
 import React, { useState, useEffect ,Component} from 'react';
-import { Button, View, Image, StyleSheet,FlatList } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements'
-import  A from '../../img/anas.jpg';
+import { Button, View, Image, StyleSheet,TouchableHighlight,Text } from 'react-native';
+import { ListItem, Avatar,Header } from 'react-native-elements'
+import { SwipeListView } from 'react-native-swipe-list-view';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
+
 
 
 
@@ -46,7 +50,7 @@ keyExtractor = (item, index) => index.toString()
   
   return(
     <ListItem bottomDivider
-    onPress={()=>this.props.navigation.navigate('MessageScreen',{conversationId:item.conversationId,to_user_id:item.from_user_id,Image:item.Image})}>
+    onPress={()=>this.props.navigation.navigate('MessageScreen',{conversationId:item.conversationId,to_user_id:item.from_user_id,Image:item.Image,username:item.UserName})}>
       <Image
         style={styels.img}
         source={{uri:item.Image}}>
@@ -62,11 +66,43 @@ keyExtractor = (item, index) => index.toString()
   
   render () {
     return (
-      <FlatList
+             <View><Header backgroundColor={'#08d4c4'}
+            
+             centerComponent={{ text: 'Chat', style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
+            
+           />
+    
+               <SwipeListView
+                  useFlatList
+                  data={this.state.Data}
+                  renderItem={this.renderItem.bind(this) }
+
+                  renderHiddenItem={ (data, rowMap) => (
+                   <View style={{ width:'100%',height:'100%',justifyContent:'center'}} >
+                          <TouchableHighlight  
+                          activeOpacity={0.6}
+                          underlayColor="#DDDDDD"
+                          style={{width:'100%', height:'100%',alignItems:'flex-end',justifyContent:'center'}}
+                          onPress={()=>console.log('anas')}>
+                         <Icon style={{marginRight:28}} name={'trash-outline'} color={'#333'} size={28} />
+                          </TouchableHighlight>
+                      </View>
+                  )}
+                  disableRightSwipe={true}
+                  rightOpenValue={-100}
+                
+                  keyExtractor={(rowData, index) => {
+                    return index.toString();;
+                  }}
+              />
+   
+          </View>
+    
+      /* <FlatList
         keyExtractor={this.keyExtractor}
         data={this.state.Data}
         renderItem={this.renderItem.bind(this)}
-      />
+      />*/
     )
   }
 }

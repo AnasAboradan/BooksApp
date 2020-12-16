@@ -38,7 +38,7 @@ export default function Login({navigation}) {
     if(userName=='1' && password=='1')
     {
         navigation.navigate('Tabnavigation', { userId: '1' });
-        global.userId=2;
+        global.userId=1;
     }
 
       }
