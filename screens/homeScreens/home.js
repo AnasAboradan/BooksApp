@@ -1,9 +1,10 @@
 import React, { useState,Component } from 'react';
-import { Text, View,FlatList , StyleSheet,StatusBar,TouchableWithoutFeedback,Image,ScrollView } from 'react-native';
+import { Text, View,FlatList,TouchableOpacity , StyleSheet,StatusBar,TouchableWithoutFeedback,Image,ScrollView } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
 import { Card, } from 'react-native-elements';
+
 
 
 
@@ -68,16 +69,19 @@ import { Card, } from 'react-native-elements';
               <Text style={{fontSize:24,color:'#fff',fontWeight:'bold',paddingBottom:2}}>Book worm</Text>
                 
                 <View style={{flexDirection:'row', justifyContent:'space-between',alignItems:'center'}}>
-                  
+                  <TouchableOpacity
+                   onPress={()=>this.props.navigation.navigate('SearchScreen')}>
                 <MaterialCommunityIcons style={{marginRight:5,marginLeft:5}}
                     name="feature-search" color={'#fff'} size={28} backgroundColor={"#08d4c4"}
-                    onPress={()=>this.props.navigation.navigate('SearchScreen')}
-                    />
                    
+                    />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={()=>this.props.navigation.navigate('FilterScreen')}>
                     <Icon style={{marginRight:20,marginLeft:5}}
                     name="options" color={'#fff'} size={28} backgroundColor={"#08d4c4"}
-                    onPress={()=>this.props.navigation.navigate('FilterScreen')}
                     />
+                    </TouchableOpacity>
                   
                  
               </View>
