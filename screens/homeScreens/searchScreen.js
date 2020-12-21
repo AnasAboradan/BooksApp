@@ -1,9 +1,6 @@
 import React, { useState,Component } from 'react';
-import { Text, View,FlatList , StyleSheet,StatusBar,TouchableWithoutFeedback,Image,ScrollView ,SafeAreaView} from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Swiper from 'react-native-swiper';
-import { Card,SearchBar, Header  } from 'react-native-elements';
+import {SearchBar, Header  } from 'react-native-elements';
 
 class SearchScreen extends Component {
     constructor(props){

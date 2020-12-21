@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar,Image,ScrollView,SafeAreaView,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, StatusBar,Image,ScrollView,TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -49,7 +49,7 @@ export default class FilterResultScreen extends Component {
   return (
   <View style={styles.container}>
         <StatusBar backgroundColor="#08d4c4"/>
-     <SafeAreaView >
+  
      <View style={styles.head}>
             <Image
             style={styles.userImage}
@@ -76,7 +76,7 @@ export default class FilterResultScreen extends Component {
               </View>
          </View>
         
-    </SafeAreaView>
+   
               <View style={{flexDirection: 'row-reverse'}}>
               <View style={styles. FilterBox}>
               <ScrollView>

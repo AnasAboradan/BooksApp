@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, StatusBar,ScrollView ,SafeAreaView, TouchableOpacity,Alert} from 'react-native';
+import { View, Text, StyleSheet, StatusBar,ScrollView , TouchableOpacity,Alert} from 'react-native';
 import {CheckBox } from 'react-native-elements';
 import RadioButtonRN from 'radio-buttons-react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -122,7 +122,7 @@ const apply=()=>{
       centerComponent={{ text: 'Filter', style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
        />
   <ScrollView>
-  <SafeAreaView style={styles.safe}>
+  
   <Text  style={{fontSize:20,color:'black',fontWeight:'bold'}}>
     Sort By:
   </Text>
@@ -145,7 +145,7 @@ const apply=()=>{
  
   </View>
   
-   </SafeAreaView>
+
   
   </ScrollView>
   <View style={styles.footer}>
