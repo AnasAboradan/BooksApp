@@ -1,67 +1,30 @@
 import React, { useState, useEffect ,Component} from 'react';
-import { Button, View, Image, StyleSheet,TouchableHighlight,Text,TouchableOpacity } from 'react-native';
+import { Button, View,alert, Image, StyleSheet,TouchableHighlight,Text,TouchableOpacity } from 'react-native';
 import { ListItem, Avatar, Header } from 'react-native-elements';
 
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-
-
-
-
-
 
 class Wish extends Component {
 
   constructor(props){
     super(props)
     this.state={
-    Data:[
-      
-      {
-        id:1,
-        name: 'Amy Farha',
-        url: require('../../img/1.jpg'),
-        titel: 'Vice President',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:2,
-        name: 'Chris Jackson',
-        url: require('../../img/3.jpg'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:3,
-        name: 'Anas Jackson',
-        url: require('../../img/4.jpg'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:4,
-        name: 'Hello Jackson',
-        url: require('../../img/5.png'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:5,
-        name: 'My name Jackson',
-        url:require('../../img/6.jpg'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-    ],
+    Data:[],
     UserId:global.userId,
+    count:'',
+    checkcount:true
     }
-    
-   
+    this.GetuserWishlist();
   }
 
-  handelSend(){
- // console.log(this.state.UserId);
+
+
+  
+
+   
+  GetuserWishlist(){
+   //console.log(this.state.UserId);
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
     if (request.readyState !== 4) {
@@ -70,40 +33,63 @@ class Wish extends Component {
 
   if (request.status === 200) {
      var data=JSON.parse( request.responseText);
-     this.setState({Data:data});
+     this.setState({Data:data})
 
     
   } 
 };
 
-request.open('GET', 'http://10.0.2.2:80/Api/api.php?userId='+this.state.UserId);
+request.open('GET', 'http://10.0.2.2:80/Api/wish.php?userId='+global.userId);
 request.send();
    
 }
  
+    getcount(){
+     var request = new XMLHttpRequest();
+    request.onreadystatechange = (e) => {
+    if (request.readyState !== 4) {
+    return;
+  }
 
+  if (request.status === 200) {
+    
+    if(this.state.checkcount)
+    {
+      this.setState({count:request.responseText});
+      this.setState({checkcount:false})
+    }
+    if(request.responseText!=this.state.count)
+    {
+      this.setState({checkcount:true});
+      this.GetuserWishlist();
+    }
+ 
+    
+    
+  } 
+};
+
+request.open('GET', 'http://10.0.2.2:80/Api/wish.php?userid='+global.userId+'&count=2');
+request.send();
+    }
+ 
   
   renderItem ({ item })  {
-    
-  
   return(
     <TouchableHighlight
     activeOpacity={0.6}
     underlayColor="#DDDDDD"
-    onPress={()=>this.props.navigation.navigate('Bookdetalies',
-    {BookId:item.id, 
-    Booktitel:item.titel,
-    Bookdetalis:item.dis,
-    bookurl:item.url})}>
+    onPress={()=>this.props.navigation.navigate('Bookdetalies',{B_id:item.Bid,uri:item.img})}>
     <ListItem bottomDivider containerStyle={{marginTop:5,marginBottom:5}} >
    
       <Image
         style={styels.img}
-        source={item.url}>
+        source={{uri:item.img}}>
        </Image>
      <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
-        <ListItem.Subtitle>{item.dis}</ListItem.Subtitle>
+        <ListItem.Title>{item.BookName}</ListItem.Title>
+        <ListItem.Subtitle>By: {item.Aurthor}. </ListItem.Subtitle>
+        <ListItem.Subtitle>Price: {item.Price}$ </ListItem.Subtitle>
       </ListItem.Content>
      
     </ListItem>
@@ -124,29 +110,41 @@ request.send();
     
                <SwipeListView
                   useFlatList
+                  ref={ref => this._swipeListView = ref}
                   data={this.state.Data}
+
                   renderItem={this.renderItem.bind(this) }
 
                   renderHiddenItem={ (data, rowMap) => (
                    <View style={{width:'100%',height:'100%',justifyContent:'center'}} >
-                          <TouchableHighlight
-                          onPress={()=>{
-                           
-                            let data1=this.state.Data;
-                            const filteredItems = data1.filter(item => item.id !==data.item.id )
-                            this.setState({Data:filteredItems})
+                          <TouchableOpacity
+                          onPress={()=>
+                          {
+                            this._swipeListView.safeCloseOpenRow()
+                            var request = new XMLHttpRequest();
+                            request.onreadystatechange = (e) => {
+                            if (request.readyState !== 4) {
+                            return;
+                          }
+                        
+                          if (request.status === 200) {
+                             this.GetuserWishlist();
+                            } 
+                        };
+                        
+                        request.open('GET', 'http://10.0.2.2:80/Api/wish.php?userId='+global.userId+'&bookid='+data.item.Bid);
+                        request.send();
                           }}  
                           activeOpacity={0.6}
                           underlayColor="#DDDDDD"
                           style={{width:'100%', height:'100%',alignItems:'flex-end',justifyContent:'center'}}
                         >
                          <Icon style={{marginRight:28}} name={'trash-outline'} color={'#333'} size={28} />
-                          </TouchableHighlight>
+                          </TouchableOpacity>
                       </View>
                   )}
-                  disableRightSwipe={true}
+                  ///disableRightSwipe={true}
                   rightOpenValue={-100}
-                
                   keyExtractor={(rowData, index) => {
                     return index.toString();;
                   }}
@@ -161,6 +159,7 @@ request.send();
       />*/
     )
   }
+  
 }
 const styels=StyleSheet.create({
   img:{

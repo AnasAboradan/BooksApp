@@ -3,6 +3,8 @@ import * as Animatable from 'react-native-animatable';
 import { View, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableOpacity ,TextInput} from 'react-native';
 import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 import { Table, Row, Rows } from 'react-native-table-component';
+import LinearGradient from 'react-native-linear-gradient';
+import BookShow from './bookShow';
 //global.userId   is used to get user Id
 
 
@@ -11,23 +13,82 @@ class Bookdetalies extends React.Component{
     super(props);
 
     this.state = {
-     BookId:props.BookID,
-     seller:'',
+      BookId:this.props.route.params.B_id,
+      sellerId:'',
+      seller:'',
       Aurthor:'',
       bookName:'',
       Description:'',
       Category:'',
       Price:'',
       Publisheddate:'',
-      img:props.img,
+      addTowishlist:''
      }
   
-  this.getBookDetalies(props.route.params.BookIDid);
- // console.log)
+  }
+  componentDidMount(){
+    this.getBookDetalies(this.props.route.params.B_id);
+    this. checkIfBookIsAddToUserWishList(this.props.route.params.B_id);
+  }
+   checkIfBookIsAddToUserWishList(BookId)
+   {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = (e) => {
+    if (request.readyState !== 4) {
+    return;
   }
 
+  if (request.status === 200) {
+    if( request.responseText=='false')
+    {
+      this.setState({addTowishlist:'Add to wish list'});
+    }
+    else{
+      this.setState({addTowishlist:'Remove from wish list'});
+    }
+   
+ } 
+};
 
+request.open('GET', 'http://10.0.2.2:80/Api/getBookDetalies.php?checkB_id='+BookId+'&userid='+ global.userId);
+request.send();
+     
 
+   }
+
+   handelBookwishlist(){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = (e) => {
+    if (request.readyState !== 4)
+    {
+    return;
+    }
+ 
+
+  if (request.status === 200) 
+  {
+    if(this.state.addTowishlist=='Add to wish list'){
+      this.setState({addTowishlist:'Remove from wish list'});
+
+    }
+    else{
+      this.setState({addTowishlist:'Add to wish list'});
+    }
+  
+    console.log(request.responseText);
+   } 
+};
+if(this.state.addTowishlist=='Add to wish list')
+{
+request.open('GET', 'http://10.0.2.2:80/Api/handelwishlist.php?id='+this.state.BookId+'&userid='+global.userId+'&ch='+1);
+request.send();
+}
+else{
+    request.open('GET', 'http://10.0.2.2:80/Api/handelwishlist.php?id='+this.state.BookId+'&userid='+global.userId+'&ch='+0);
+    request.send();
+   }
+
+}
   getBookDetalies(BookId){
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
@@ -44,7 +105,8 @@ class Bookdetalies extends React.Component{
      this.setState({Price:data[0].Price});
      this.setState({Publisheddate:data[0].date});
      this.setState({Description:data[0].Description});
- } 
+     this.setState({sellerId:data[0].U_id});
+} 
 };
 
 request.open('GET', 'http://10.0.2.2:80/Api/getBookDetalies.php?B_id='+BookId);
@@ -52,7 +114,14 @@ request.send();
    
 }
   render(){
-    
+
+    if( global.userId==this.state.sellerId)
+    {
+      return(
+        <BookShow BookID={this.state.BookId} img={this.props.route.params.uri}></BookShow >
+      );
+    }
+   else{ 
   return (
    
     <ImageHeaderScrollView
@@ -60,12 +129,13 @@ request.send();
     minHeight={20}
     maxOverlayOpacity={0.8}
  
-    renderHeader={() => <Image resizeMode='stretch' source={{uri:this.props.route.params.img}} 
+    renderHeader={() =>
+       <Image resizeMode='stretch' source={{uri:this.props.route.params.uri}} 
     style={{ height: 300, 
       width: Dimensions.get('window').width }} />}
 
   >
-    <Animatable.View style={{ height:600, backgroundColor:'#fff', borderTopEndRadius:50,
+    <Animatable.View style={{ height:670, backgroundColor:'#fff', borderTopEndRadius:50,
              borderTopLeftRadius:50}}
              animation="fadeInUpBig"
              duration={1500}>
@@ -101,14 +171,36 @@ request.send();
                            textStyle={styles.text}/>
             </Table>
           </View>
-         </View>
+       
+          <View style={{width:'90%' ,flexDirection:'column', height:50, marginTop:20 }}>
+          <TouchableOpacity
+                  onPress={()=>this.props.navigation.navigate('MessageScreen')}>
+                 <LinearGradient colors={['#08d4c4', '#01ab9d','#01ab9d']} style={styles.linearGradient} >
+                        <Text style={styles.buttonText2}>
+                           Send message
+                         </Text>
+                       </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+                  onPress={this. handelBookwishlist.bind(this)}>
+                 <LinearGradient colors={['#08d4c4', '#01ab9d','#01ab9d']} style={styles.linearGradient} >
+                        <Text style={styles.buttonText2}>
+                          {this.state.addTowishlist}
+                         </Text>
+                       </LinearGradient>
+          </TouchableOpacity>
+          </View>
+        
+        
+        </View>
       
       </TriggeringView>
     </Animatable.View>
   </ImageHeaderScrollView>
  
   );
-            }
+      }
+    }
 }
 
 

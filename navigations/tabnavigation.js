@@ -59,11 +59,11 @@ export default function Tabnavigation() {
           name="Sell"
           component={Sell}
           options={{
-            tabBarLabel: 'sella book',
+            tabBarLabel: 'Sell book',
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="book-plus-multiple" color={color} size={28} />
             ),
-            tabBarColor:'#a11898'
+            tabBarColor:'#08d4c4'
           }}
         />
         

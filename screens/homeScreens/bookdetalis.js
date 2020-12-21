@@ -4,6 +4,7 @@ import { View, Text, Image, StyleSheet, StatusBar, Dimensions, TouchableOpacity 
 import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 import { Table, Row, Rows } from 'react-native-table-component';
 import LinearGradient from 'react-native-linear-gradient';
+import BookShow from '../acountScreens/bookShow'
 //global.userId   is used to get user Id
 
 
@@ -12,19 +13,110 @@ class Bookdetalies extends React.Component{
     super(props);
 
     this.state = {
-      tableData: [
-        ['Book Publisher','Anas Aboradan'],
-        ['Book name',this.props.route.params.Booktitel],
-        ['Book type','Fysik'],
-        ['Price', '400 SEK'],
-        ['Location', 'Västerås. Adress: Bygatan 10, Postnummer: 724 66'],
-        ['Published date', '2020/05/05',]
-      ]
-    }
-    //console.log(this.props.route.params.Bookdetalis);
+      BookId:this.props.route.params.B_id,
+      sellerId:'',
+      sellerImage:'',
+      seller:'',
+      Aurthor:'',
+      bookName:'',
+      Description:'',
+      Category:'',
+      Price:'',
+      Publisheddate:'',
+      addTowishlist:''
+     }
+     this.getBookDetalies(this.props.route.params.B_id);
+     this. checkIfBookIsAddToUserWishList(this.props.route.params.B_id);
   }
-  render(){
+  componentDidMount(){
     
+  }
+   checkIfBookIsAddToUserWishList(BookId)
+   {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = (e) => {
+    if (request.readyState !== 4) {
+    return;
+  }
+
+  if (request.status === 200) {
+    if( request.responseText=='false')
+    {
+      this.setState({addTowishlist:'Add to wish list'});
+    }
+    else{
+      this.setState({addTowishlist:'Remove from wish list'});
+    }
+   
+ } 
+};
+
+request.open('GET', 'http://10.0.2.2:80/Api/getBookDetalies.php?checkB_id='+BookId+'&userid='+ global.userId);
+request.send();
+     
+
+   }
+
+   handelBookwishlist(){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = (e) => {
+    if (request.readyState !== 4)
+    {
+    return;
+    }
+ 
+
+  if (request.status === 200) 
+  {
+    if(this.state.addTowishlist=='Add to wish list'){
+      this.setState({addTowishlist:'Remove from wish list'});
+
+    }
+    else{
+      this.setState({addTowishlist:'Add to wish list'});
+    }
+  
+   // console.log(request.responseText);
+   } 
+};
+if(this.state.addTowishlist=='Add to wish list')
+{
+request.open('GET', 'http://10.0.2.2:80/Api/handelwishlist.php?id='+this.state.BookId+'&userid='+global.userId+'&ch='+1);
+request.send();
+}
+else{
+    request.open('GET', 'http://10.0.2.2:80/Api/handelwishlist.php?id='+this.state.BookId+'&userid='+global.userId+'&ch='+0);
+    request.send();
+   }
+
+}
+  getBookDetalies(BookId){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = (e) => {
+    if (request.readyState !== 4) {
+    return;
+  }
+
+  if (request.status === 200) {
+     var data=JSON.parse( request.responseText);
+     this.setState({seller:data[0].UserName});
+     this.setState({Aurthor:data[0].Aurthor});
+     this.setState({BookName:data[0].BookName});
+     this.setState({Category:data[0].category});
+     this.setState({Price:data[0].Price});
+     this.setState({Publisheddate:data[0].date});
+     this.setState({Description:data[0].Description});
+     this.setState({sellerId:data[0].U_id});
+     this.setState({sellerImage:data[0].Image});
+} 
+};
+
+request.open('GET', 'http://10.0.2.2:80/Api/getBookDetalies.php?B_id='+BookId);
+request.send();
+   
+}
+  render(){
+
   return (
    
     <ImageHeaderScrollView
@@ -32,12 +124,13 @@ class Bookdetalies extends React.Component{
     minHeight={20}
     maxOverlayOpacity={0.8}
  
-    renderHeader={() => <Image source={this.props.route.params.bookurl} 
+    renderHeader={() =>
+       <Image resizeMode='stretch' source={{uri:this.props.route.params.uri}} 
     style={{ height: 300, 
       width: Dimensions.get('window').width }} />}
 
   >
-    <Animatable.View style={{ height:600, backgroundColor:'#fff', borderTopEndRadius:50,
+    <Animatable.View style={{ height:670, backgroundColor:'#fff', borderTopEndRadius:50,
              borderTopLeftRadius:50}}
              animation="fadeInUpBig"
              duration={1500}>
@@ -56,7 +149,7 @@ class Bookdetalies extends React.Component{
                 marginBottom:0,
               }}>
               <Text style={{textAlign:'left', fontSize:24, fontWeight:'bold'}}>Description:</Text>
-              <Text style={{textAlign:'left', fontSize:18, fontWeight:'100', marginBottom:10}}>{this.props.route.params.Bookdetalis}</Text>
+              <Text style={{textAlign:'left', fontSize:18, fontWeight:'100', marginBottom:10}}>{this.state.Description}</Text>
             </View>
           
           
@@ -64,13 +157,21 @@ class Bookdetalies extends React.Component{
           <View style={styles.container}>
           <Row data={['Detalies']} style={styles.head} textStyle={{textAlign:'left', fontSize:24, fontWeight:'bold',paddingLeft:10}}/>
             <Table borderStyle={{borderWidth: 0.2, borderColor: 'rgba(0,0,0,0.2)'}}>
-            <Rows data={this.state.tableData} textStyle={styles.text}/>
+            <Rows data={[ ['Seller',this.state.seller],
+                          ['Aurthor',this.state.Aurthor],
+                          ['Book name',this.state.BookName],
+                          ['Category',this.state.Category],
+                          ['Price',this.state.Price+' $'],
+                          ['Published date',this.state.Publisheddate]]} 
+                           textStyle={styles.text}/>
             </Table>
           </View>
        
           <View style={{width:'90%' ,flexDirection:'column', height:50, marginTop:20 }}>
           <TouchableOpacity
-                  onPress={()=>this.props.navigation.navigate('MessageScreen')}>
+                  onPress={()=>this.props.navigation.navigate('Sendmessage',{sellerId:this.state.sellerId,
+                  sellerName:this.state.seller,
+                  sellerimg:this.state.sellerImage})}>
                  <LinearGradient colors={['#08d4c4', '#01ab9d','#01ab9d']} style={styles.linearGradient} >
                         <Text style={styles.buttonText2}>
                            Send message
@@ -78,10 +179,10 @@ class Bookdetalies extends React.Component{
                        </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
-                  onPress={()=>alert('Book is added')}>
+                  onPress={this.handelBookwishlist.bind(this)}>
                  <LinearGradient colors={['#08d4c4', '#01ab9d','#01ab9d']} style={styles.linearGradient} >
                         <Text style={styles.buttonText2}>
-                           Add book to wich list
+                          {this.state.addTowishlist}
                          </Text>
                        </LinearGradient>
           </TouchableOpacity>
@@ -95,7 +196,8 @@ class Bookdetalies extends React.Component{
   </ImageHeaderScrollView>
  
   );
-            }
+      }
+    
 }
 
 

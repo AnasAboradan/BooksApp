@@ -16,52 +16,15 @@ class Mybook extends Component {
   constructor(props){
     super(props)
     this.state={
-    Data:[
-      
-      {
-        id:1,
-        name: 'Amy Farha',
-        url: require('../../img/1.jpg'),
-        titel: 'Vice President',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:2,
-        name: 'Chris Jackson',
-        url: require('../../img/3.jpg'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:3,
-        name: 'Anas Jackson',
-        url: require('../../img/4.jpg'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:4,
-        name: 'Hello Jackson',
-        url: require('../../img/5.png'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-      {
-        id:5,
-        name: 'My name Jackson',
-        url:require('../../img/6.jpg'),
-        titel: 'Vice Chairman',
-        dis:'The idea with React Native Elements is more about component structure than actual design.'
-      },
-    ],
+    Data:[],
     UserId:global.userId,
     }
     
-   
+   this.getUserBooks();
   }
 
-  handelSend(){
- // console.log(this.state.UserId);
+  getUserBooks(){
+ 
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
     if (request.readyState !== 4) {
@@ -71,12 +34,10 @@ class Mybook extends Component {
   if (request.status === 200) {
      var data=JSON.parse( request.responseText);
      this.setState({Data:data});
-
-    
-  } 
+ } 
 };
 
-request.open('GET', 'http://10.0.2.2:80/Api/api.php?userId='+this.state.UserId);
+request.open('GET', 'http://10.0.2.2:80/Api/mybooks.php?userId='+global.userId);
 request.send();
    
 }
@@ -90,20 +51,17 @@ request.send();
     <TouchableHighlight
     activeOpacity={0.6}
     underlayColor="#DDDDDD"
-    onPress={()=>this.props.navigation.navigate('BookShow',
-    {BookId:item.id, 
-    Booktitel:item.titel,
-    Bookdetalis:item.dis,
-    bookurl:item.url})}>
+    onPress={()=> this.props.navigation.navigate('BookShow',{BookIDid:item.B_id,img:item.img,})}>
     <ListItem bottomDivider containerStyle={{marginTop:5,marginBottom:5}} >
    
       <Image
         style={styels.img}
-        source={item.url}>
+        source={{uri:item.img}}>
        </Image>
      <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
-        <ListItem.Subtitle>{item.dis}</ListItem.Subtitle>
+        <ListItem.Title>{item.BookName}</ListItem.Title>
+        <ListItem.Subtitle>By: {item.Aurthor}</ListItem.Subtitle>
+        <ListItem.Subtitle>Price: {item.Price} $</ListItem.Subtitle>
       </ListItem.Content>
      
     </ListItem>
@@ -125,12 +83,14 @@ request.send();
                <SwipeListView
                   useFlatList
                   data={this.state.Data}
+                  ref={ref => this._swipeListView = ref}
                   renderItem={this.renderItem.bind(this) }
 
                   renderHiddenItem={ (data, rowMap) => (
                    <View style={{width:'100%',height:'100%',justifyContent:'center'}} >
                           <TouchableHighlight
                           onPress={()=>{
+                            this._swipeListView.safeCloseOpenRow()
                             let data1=this.state.Data;
                             const filteredItems = data1.filter(item => item.id !==data.item.id )
                             this.setState({Data:filteredItems})

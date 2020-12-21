@@ -9,8 +9,9 @@ import Tabnavigation from '../navigations/tabnavigation';
 import SearchScreen from '../screens/homeScreens/searchScreen';
 import FilterScreen from '../screens/homeScreens/filterScreen';
 import Bookdetalies from '../screens/homeScreens/bookdetalis'
-
+import FilterResultScreen from '../screens/homeScreens/FilterResultScreen';
 import MessageScreen from '../screens/chatScreeens/message';
+import Sendmessage from '../screens/chatScreeens/sendmessage'
 
 import MyBooks from '../screens/acountScreens/myBooks';
 import MyProfile from '../screens/acountScreens/myProfile';
@@ -36,17 +37,25 @@ const [userId,SetUserId]=useState('');
       <RootStack.Screen name="SignUpScreens" component={SignUpScreens} options={{headerShown:false}}/>
       <RootStack.Screen name="Tabnavigation" component={Tabnavigation} options={{headerShown:false}} />
      
-      <RootStack.Screen name="SearchScreen" component={SearchScreen}/>
-      <RootStack.Screen name="FilterScreen" component={FilterScreen}/>
+      <RootStack.Screen name="SearchScreen" component={SearchScreen}  options={{
+          header: () => null,
+        }}/>
+      <RootStack.Screen name="FilterResultScreen" component={FilterResultScreen}  options={{
+          header: () => null,
+        }}/>
+      
+      <RootStack.Screen name="FilterScreen" component={FilterScreen}
+        options={{headerShown:false}} />
       <RootStack.Screen name="Bookdetalies" component={Bookdetalies}
       options={({route})=>({
         headerBackTitleVisible:false,
         headerTitle:false,
         headerTransparent:true,
-        headerTintColor:'black'
+        headerTintColor:'#08d4c4'
       })
         
       }/>
+      
       <RootStack.Screen name="MessageScreen" component={MessageScreen}
        options={({route})=>({
         headerBackTitleVisible:false,
@@ -55,6 +64,13 @@ const [userId,SetUserId]=useState('');
         headerTintColor:'#fff'
       })}/>
       
+      <RootStack.Screen name="Sendmessage" component={Sendmessage}
+       options={({route})=>({
+        headerBackTitleVisible:false,
+        headerTitle:true,
+        headerTransparent:true,
+        headerTintColor:'#fff'
+      })}/>
      
       <RootStack.Screen name="MyBooks" component={MyBooks} 
        options={{headerShown:false}} />
