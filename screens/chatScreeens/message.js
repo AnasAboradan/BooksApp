@@ -66,7 +66,7 @@ return;
 
 if (request.status === 200) {
   this.getmessage();
-  console.log(request.responseText);
+  //console.log(request.responseText);
 } else {
 console.log('success', request.responseText);
 }

@@ -50,7 +50,7 @@ export default function Login({navigation}) {
           </View>
           <Animatable.View style={styles1.fotter}
           animation= "bounceInLeft"
-                duration={1500}
+                duration={3000}
                 >
            <Text style={{color:'black',fontSize:20,}}>User name</Text>
            <View style={styles1.email}>

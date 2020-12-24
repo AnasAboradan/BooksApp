@@ -51,7 +51,7 @@ export default  function singUp({navigation}){
        </View>
          <Animatable.View style={signupstyle.fotter}
           animation="bounceInRight"
-          duration={1500} >
+          duration={3000} >
                    
                    
                    

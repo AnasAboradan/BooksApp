@@ -47,7 +47,14 @@ request.send();
 keyExtractor = (item, index) => index.toString()
   
   renderItem ({ item })  {
-  
+    let color;
+    if(item.to_user==global.userId)
+    {
+      color=true;
+    }
+    else{
+      color=false;
+    }
   return(
     <ListItem bottomDivider
     onPress={()=>this.props.navigation.navigate('MessageScreen',{conversationId:item.conversationId,to_user_id:item.from_user_id,Image:item.Image,username:item.UserName})}>
@@ -57,7 +64,7 @@ keyExtractor = (item, index) => index.toString()
        </Image>
      <ListItem.Content>
         <ListItem.Title>{item.UserName}</ListItem.Title>
-        <ListItem.Subtitle>{item.message_text}</ListItem.Subtitle>
+        <ListItem.Subtitle style={color ?styels.text : styels.text1}>{item.message_text}</ListItem.Subtitle>
       </ListItem.Content>
       <ListItem.Chevron />
     </ListItem>
@@ -112,6 +119,13 @@ const styels=StyleSheet.create({
     height:50,
     borderRadius:50,
     marginRight:15
+  },
+  text:{
+    color:'orange',
+    fontSize:15
+  },
+  text1:{
+    color:'rgba(0,0,0,0.7)'
   }
 })
 export default Chat 

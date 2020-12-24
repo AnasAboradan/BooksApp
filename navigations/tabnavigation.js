@@ -21,7 +21,7 @@ export default function Tabnavigation() {
   return (
 
    
-      <Tab.Navigator
+      <Tab.Navigator 
         initialRouteName="Home"
         //activeColor=""
        /* activeColor="#e91e63"

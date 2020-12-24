@@ -75,7 +75,7 @@ class Home extends Component {
 
 
 
-        <FlatList
+        <FlatList style={{width:'100%',}}
           numColumns={2}
           data={this.state.Data}
           renderItem={(item) => {
@@ -92,7 +92,7 @@ class Home extends Component {
 
                   }
                 }}>
-                <Card containerStyle={{ width: 180, height: 260, }}>
+                <Card containerStyle={{ width: 180, height: 260,marginLeft:12 }}>
                   <Card.Title>{item.item.BookName}</Card.Title>
                   <Card.Divider />
                   <Image style={{ height: 100, width: 150 }} resizeMode='stretch' source={{ uri: item.item.img }}></Image>

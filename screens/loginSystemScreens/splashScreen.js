@@ -16,7 +16,7 @@ export default function Splash({navigation}){
                <View style={styles.ImagContainer}>
                <Animatable.Image
                  animation="bounce"
-                 duration={1500}
+                 duration={3000}
                  style={styles.ImageLogo}
                  source={require('../../img/logo.png')}
               />
@@ -28,7 +28,7 @@ export default function Splash({navigation}){
            
             <Animatable.View style={styles.footer}
             animation="fadeInUpBig"
-                duration={1500}>
+                duration={3000}>
                     <View style={{flex:1}}>
                         <View style={styles.textContainer}>
                         <Text style={styles.text}>Wellcome to <Text style={{color:'#08d4c4' ,fontFamily:'Menlo-Bold'}}> Book worm </Text>App !</Text>
