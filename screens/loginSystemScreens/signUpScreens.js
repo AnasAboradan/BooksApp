@@ -39,10 +39,68 @@ export default  function singUp({navigation}){
             ToastAndroid.show('Password not matching !', ToastAndroid.SHORT);
             return;
         }
-        props.setactivistScreen('AppsScreens');
-        props.SetUserId(1);
+      
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = (e) => {
+          if (request.readyState !== 4) {
+            return;
+          }
+    
+          if (request.status === 200) {
+            if( request.responseText=='true')
+            {
+                navigation.navigate('LoginScreens');
+              
+            } 
+            else if( request.responseText=='username')
+            {
+             ToastAndroid.show('Username token', ToastAndroid.SHORT);
+             console.log(request.responseText);
+             return;
+            }
+            else if( request.responseText=='email')
+            {
+             ToastAndroid.show('Email is token', ToastAndroid.SHORT);
+             console.log(request.responseText);
+             return;
+            }
+          }
+        };
+    
+        request.open('GET', 'http://10.0.2.2:80/Api/signup.php?uname='+userName+'&psw='+passowrod+'&email='+email);
+        request.send();
+    
 
+     
 
+/*signup.php?
+var request = new XMLHttpRequest();
+        request.onreadystatechange = (e) => {
+          if (request.readyState !== 4) {
+              console.log('ja')
+            return;
+          }
+    
+          if (request.status === 200) {
+            if( request.responseText=='true')
+            {
+                navigation.navigate('LoginScreens');
+              
+            } 
+            else if( request.responseText=='username')
+            {
+             ToastAndroid.show('Username token', ToastAndroid.SHORT);
+             console.log(request.responseText);
+             return;
+            }
+            else if( request.responseText=='email')
+            {
+             ToastAndroid.show('Email is token', ToastAndroid.SHORT);
+             console.log(request.responseText);
+             return;
+            }
+          }
+        }; */
     }
     return(
        <View style={signupstyle.contanier}>
@@ -75,6 +133,7 @@ export default  function singUp({navigation}){
                 
                         <TextInput placeholder={'Enter your email'} 
                         style={signupstyle.textinput}
+                        keyboardType='email-address'
                         onChangeText={(value)=>setemail(value)}>
                         </TextInput>
                     </View>

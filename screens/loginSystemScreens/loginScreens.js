@@ -30,18 +30,50 @@ export default function Login({navigation}) {
 
       }
 
-      const checkUserLogin=()=>{
-    if (userName=='' || password=='') {
-        ToastAndroid.show('Required filed are are missing!', ToastAndroid.SHORT);
-        return;
-    }
-    if(userName=='1' && password=='1')
+    const checkUserLogin=()=>
     {
-        navigation.navigate('Tabnavigation', { userId: '1' });
-        global.userId=1;
-    }
+        if (userName=='' || password=='') {
+            ToastAndroid.show('Required filed are are missing!', ToastAndroid.SHORT);
+            return;
+        }
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = (e) => {
+          if (request.readyState !== 4) {
+            return;
+          }
+    
+          if (request.status === 200) {
+            if( request.responseText=='false')
+            {
+                console.log(request.responseText);
+                ToastAndroid.show('Username or password is wrong', ToastAndroid.SHORT);
+            } 
+            else
+            {
+                 global.userId=request.responseText;
+                 navigation.navigate('Tabnavigation');
+           
+            }
+          }
+        };
+    
+        request.open('GET', 'http://10.0.2.2:80/Api/login.php?uid='+userName+'&pwd='+ password);
+        request.send();
+      
+    /*if( request.responseText=='false')
+    {
+        console.log(request.responseText);
+        ToastAndroid.show('Username or password is wrong', ToastAndroid.SHORT);
+    } 
+    else{
+         global.userId=request.responseText;
+         navigation.navigate('Tabnavigation');
+         console.log(request.responseText);
+       }*/
 
-      }
+  
+ 
+}
  return (
       <View style={styles1.contanier}>
            <StatusBar backgroundColor="#08d4c4"/>
