@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import { StatusBar } from 'react-native'
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -14,9 +14,8 @@ import AcountScreens from '../screens/acountScreens/acountScreens';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function Tabnavigation() {
-   
-   
+export default function Tabnavigation({navigation}) {
+
  
   return (
 
@@ -36,10 +35,11 @@ export default function Tabnavigation() {
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="home" color={color} size={28} />
             ),
-            tabBarColor:'#08d4c4',
+           tabBarColor:'#08d4c4',
            headerStyle:{
              shadowColor:'#FFF'
-           }
+           },
+         
           }}
         />
 

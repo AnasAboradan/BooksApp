@@ -73,7 +73,6 @@ request.send();
       this.setState({sellerId:item.sellerId})
       this.setState({sellerName:item.sellerName})
       this.setState({sellerimg:item.sellerimg})
-      console.log(this.state.sellerimg)
       bs.current.snapTo(0)}}>
     <ListItem bottomDivider containerStyle={{marginTop:5,marginBottom:5}} >
    

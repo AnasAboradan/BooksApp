@@ -19,10 +19,17 @@ class Home extends Component {
     this.state = {
       Data: []
     }
+
     this.getBookinf();
+    this.focusListener = this.props.navigation.addListener('focus', () => {
+    this.getBookinf();
+    });
+    
   }
 
+
   getBookinf() {
+   
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
       if (request.readyState !== 4) {
@@ -32,7 +39,7 @@ class Home extends Component {
       if (request.status === 200) {
         var data = JSON.parse(request.responseText);
         this.setState({ Data: data })
-
+        console.log('1')
 
       }
     };

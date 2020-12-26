@@ -190,32 +190,3 @@ const styles = StyleSheet.create({
   }
 
 }) 
-/*<Animatable.View style={styles.foter}
-animation="fadeInUpBig"
-duration={3000}>
-    
-<View style={styles.item}>
-   <View style={{flexDirection:'row',}}>
-   <Avatar
-       size='medium'
-       rounded
-       source={{
-         uri:'https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg'}
-       }/>
-   <Text style={{fontSize:20,color:'#333', marginTop:7, marginLeft:20}}>Anas Aboradan</Text>
-   </View>
-   <View>
-     <Text style={{marginTop:10, color:'#fff',fontSize:16, lineHeight:25}}>
-     iOS and Android now have OS-level capabilities to switch between dark
-      and light mode, and consumers are now expecting their 
-      apps to match this system-level theming. However, being able to switch.
-     </Text>
-   </View>
-   <View style={{marginTop:15, alignItems:'flex-end'}}>
-     <Text style={{fontSize:15}}>
-       2020-02-15 14:20
-     </Text>
-   </View>
-</View>
-
-</Animatable.View>*/
