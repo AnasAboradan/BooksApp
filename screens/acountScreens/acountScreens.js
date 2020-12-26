@@ -25,7 +25,7 @@ const list = [
     icon: 'contrast'
   },
   {
-    title: 'Help and suport',
+    title: 'Help and support',
     screen:'HelpAndSuport',
     icon: 'help'
   },
@@ -43,7 +43,7 @@ class Acount extends Component {
        <View style={styles.contanier}>
              <StatusBar backgroundColor="#08d4c4"/>
              <Header backgroundColor={'#08d4c4'}
-             centerComponent={{ text: 'My acount', style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
+             centerComponent={{ text: 'My account', style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
      
     />
 
@@ -64,7 +64,7 @@ class Acount extends Component {
     <ListItem bottomDivider onPress={()=>this.props.navigation.navigate('SplashScreen')} >
           <Icon name={'log-out'} color={'#333'} size={28} />
           <ListItem.Content >
-          <ListItem.Title>Log ut</ListItem.Title>
+          <ListItem.Title>Log out</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
           </ListItem>
