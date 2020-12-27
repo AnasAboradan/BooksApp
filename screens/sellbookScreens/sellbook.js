@@ -102,7 +102,7 @@ class Sellbook extends Component {
         centerComponent={{ text: 'Sell book', style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}/>
          <Animatable.View
           animation="fadeInUpBig"
-          duration={1500}
+          duration={4000}
           style={styles.inpputcontanier}>
             <ScrollView>
               <Text style={styles.text}>Book Name:</Text>

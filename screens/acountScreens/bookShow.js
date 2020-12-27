@@ -68,7 +68,7 @@ request.send();
     <Animatable.View style={{ height:600, backgroundColor:'#fff', borderTopEndRadius:50,
              borderTopLeftRadius:50}}
              animation="fadeInUpBig"
-             duration={1500}>
+             duration={3000}>
              <TriggeringView onHide={() => console.log("text hidden")}>
              <View style={{ 
              alignItems:'center', 
