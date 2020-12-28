@@ -276,7 +276,7 @@ export default class Edit extends React.Component {
               <TextInput
                 style={styles.textinput}
                 defaultValue={this.state.Author}
-                onChangeItem={(value) => this.setState({ Author: value })}
+                onChangeText={(value) => this.setState({ Author: value })}
                 multiline={true}>
               </TextInput>
             </View>
@@ -285,7 +285,7 @@ export default class Edit extends React.Component {
               <TextInput
                 style={styles.textinput}
                 defaultValue={this.state.Description}
-                onChangeItem={(value) => this.setState({ Description: value })}
+                onChangeText={(value) => this.setState({ Description: value })}
                 multiline={true}>
               </TextInput>
             </View>
@@ -295,7 +295,7 @@ export default class Edit extends React.Component {
               <TextInput
                 style={styles.textinput}
                 defaultValue={this.state.Edition}
-                onChangeItem={(value) => this.setState({ Edition: value })}
+                onChangeText={(value) => this.setState({ Edition: value })}
                 multiline={true}>
               </TextInput>
             </View>
@@ -306,7 +306,7 @@ export default class Edit extends React.Component {
                 style={styles.textinput}
                 defaultValue={this.state.Price}
                 multiline={true}
-                onChangeItem={(value) => this.setState({ Price: value })}
+                onChangeText={(value) => this.setState({Price:value })}
                 keyboardType='numeric'>
               </TextInput>
             </View>
