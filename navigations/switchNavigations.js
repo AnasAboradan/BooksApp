@@ -21,6 +21,7 @@ import HelpAndSuport from '../screens/acountScreens/helpAndSuport';
 import Feedback from '../screens/acountScreens/feedback';
 import Wish from '../screens/acountScreens/wish';
 import BookShow from '../screens/acountScreens/bookShow';
+import Edit from '../screens/acountScreens/editScreen';
 
 
 
@@ -86,6 +87,7 @@ const [userId,SetUserId]=useState('');
       <RootStack.Screen name="Feedback" component={Feedback} 
       options={{headerShown:false}}  />
       <RootStack.Screen name="Wish" component={Wish}   options={{headerShown:false}} />
+      <RootStack.Screen name="Edit" component={Edit}  options={{headerShown:false}}  />
       <RootStack.Screen name="HelpAndSuport" component={HelpAndSuport}
            options={{headerShown:false}} />
      </RootStack.Navigator>

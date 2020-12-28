@@ -17,10 +17,23 @@ class Mybook extends Component {
     UserId:global.userId,
     bookId:'',
    }
-   this.getUserBooks();
+
+
+   this.reloadscreen();
+   
   }
 
-  getUserBooks(){
+  
+
+ async reloadscreen(){
+ await this.getUserBooks();
+  this.focusListener = this.props.navigation.addListener('focus', () => {
+    this.getUserBooks();
+      });
+  }
+
+  
+ async getUserBooks(){
  
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
@@ -34,8 +47,8 @@ class Mybook extends Component {
   } 
   };
   
-  request.open('GET', 'http://10.0.2.2:80/Api/mybooks.php?userId='+global.userId);
-  request.send();
+ await request.open('GET', 'http://10.0.2.2:80/Api/mybooks.php?userId='+global.userId);
+ await request.send();
    
   }
     
@@ -61,7 +74,7 @@ class Mybook extends Component {
     <TouchableHighlight
     activeOpacity={0.6}
     underlayColor="#DDDDDD"
-    onPress={()=>this.props.navigation.navigate('BookShow', { BookIDid: item.B_id, img: item.img, })}
+    onPress={()=>{this.props.navigation.navigate('BookShow', { BookIDid: item.B_id, img: item.img, })}}
     onLongPress={()=> {
       this.setState({bookId:item.B_id})
       bs.current.snapTo(0)}}>
@@ -86,6 +99,13 @@ class Mybook extends Component {
   renderInner() {
     return(
      <View style={styels.panel}>
+        <TouchableOpacity style={styels.panelButton} 
+       onPress={()=>{
+       this.props.navigation.navigate('Edit',{bid:this.state.bookId})
+        bs.current.snapTo(1);}}
+        >
+         <Text style={styels.panelButtonTitle}>Edit</Text>
+       </TouchableOpacity>
       <TouchableOpacity style={styels.panelButton} 
        onPress={()=>{
         this.removeBook();
@@ -132,7 +152,7 @@ class Mybook extends Component {
 
            <BottomSheet
               ref={bs}
-              snapPoints={[200, 0]}
+              snapPoints={[270, 0]}
               renderContent={this.renderInner.bind(this)}
               renderHeader={this.renderHeader.bind(this)}
               initialSnap={1}

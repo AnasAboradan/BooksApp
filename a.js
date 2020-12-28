@@ -43,11 +43,26 @@ function EditProfileScreen ()  {
  }
 
  const handleUpload= async (image)=>{
-
- 
-  
- 
   const data = new FormData()
+  data.append('file',image)
+  data.append('upload_preset','myappbooks')
+  data.append("cloud_name","g-teborg")
+	
+ await fetch("https://api.cloudinary.com/v1_1/g-teborg/image/upload",{
+      method:"post",
+      body:data,
+      headers:{
+        'Accept':'application/json',
+        'Content-type':'multipart/form-data'
+      }
+  }).then(res=>res.json()).
+  then(data=>{
+      console.log(data);
+    setImg(data.url)
+  }).catch(err=>{
+      console.log(err);
+  })
+ /* const data = new FormData()
   data.append('file',image)
   data.append('upload_preset','myappbooks')
   data.append("cloud_name","dp6lkfnpw")
@@ -65,7 +80,7 @@ function EditProfileScreen ()  {
     setImg(data.url)
   }).catch(err=>{
       console.log(err);
-  })
+  })*/
 
 
  }
