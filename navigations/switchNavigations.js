@@ -22,6 +22,8 @@ import Feedback from '../screens/acountScreens/feedback';
 import Wish from '../screens/acountScreens/wish';
 import BookShow from '../screens/acountScreens/bookShow';
 import Edit from '../screens/acountScreens/editScreen';
+import EditProfile from '../screens/acountScreens/editProfile'
+
 
 
 
@@ -83,13 +85,14 @@ const [userId,SetUserId]=useState('');
         headerTransparent:true,
         headerTintColor:'rgba(0,0,0,0.8)'
       })}  />
-      <RootStack.Screen name="MyProfile" component={MyProfile}  />
+      <RootStack.Screen name="MyProfile" component={MyProfile}  options={{headerShown:false}}   />
       <RootStack.Screen name="Feedback" component={Feedback} 
       options={{headerShown:false}}  />
       <RootStack.Screen name="Wish" component={Wish}   options={{headerShown:false}} />
       <RootStack.Screen name="Edit" component={Edit}  options={{headerShown:false}}  />
       <RootStack.Screen name="HelpAndSuport" component={HelpAndSuport}
            options={{headerShown:false}} />
+      <RootStack.Screen name="EditProfile" component={EditProfile} options={{headerShown:false}}   />
      </RootStack.Navigator>
     </NavigationContainer>
   );
