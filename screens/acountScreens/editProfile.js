@@ -55,9 +55,10 @@ const fall = new Animated.Value(1);
     await this.edituserinfo(arr);
 }
 
-edituserinfo(arr){
+edituserinfo(arr)
+{
 
-console.log(arr);
+
 
 }
   async handleUpload(image) {
