@@ -1,6 +1,7 @@
 import React  from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity,Keyboard, View,FlatList} from 'react-native';
 import { Header ,Avatar} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 var myVar;
 
@@ -41,14 +42,15 @@ export default class Message extends React.Component{
     }
 
   if (request.status === 200) {
-     this.setState({DATA:JSON.parse(request.responseText)});
+    this.setState({DATA:JSON.parse(request.responseText)});
+    //console.log(request.responseText);
   } 
   else {
     console.log('success', request.responseText);
   }
 };
 
-      request.open('GET', 'http://10.0.2.2:80/Api/getConversation.php?conversationId='+this.state.conversationId);
+      request.open('GET', 'http://10.0.2.2:80/Api/getConversation.php?conversationId='+this.state.conversationId+'&userid='+global.userId);
       request.send();
     
     }
@@ -81,12 +83,14 @@ renderItem({item}){
   if(item.from_user!=this.state.userId)
     return(
         <View style={styles.item}>
-          <Text style={{ borderRadius:15,marginLeft:0, fontSize:18,backgroundColor:'#b30c81', padding:10, color:'#fff'}}>{item.message_text}</Text>
+          <Text style={{ borderRadius:15,marginLeft:0, fontSize:18,backgroundColor:'#b30c81', padding:10, color:'#fff'}}>{item.message_text}
+            <Text style={{fontSize:12, color:'black',}}>   {item.time}</Text></Text>
        </View>
     )
     else return(
       <View style={styles.item1}>
-            <Text style={{fontSize:18,marginRight:10,backgroundColor:'#597ec9', padding:10,borderRadius:15, color:'#fff'}}>{item.message_text}</Text>
+            <Text style={{fontSize:18,marginRight:10,backgroundColor:'#597ec9', padding:10,borderRadius:15, color:'#fff'}}>{item.message_text}
+            <Text style={{fontSize:12, color:'black'}}>   {item.time}</Text></Text>
     </View>
     )
 
@@ -98,15 +102,23 @@ renderItem({item}){
     return (
       <View style={styles.contanier}>
            <Header backgroundColor={'#08d4c4'}
+            backgroundColor={'#08d4c4'}
+            leftComponent={()=> <Icon  name={'arrow-back-outline'} color={'#fff'} size={30} 
+            onPress={()=>this.props.navigation.pop()}
+             />}
              centerComponent={{ text:this.state.to_user_name, style: { color: '#fff', fontSize:24,fontWeight:'bold' } }}
              rightComponent={
-              <TouchableOpacity style={{zIndex:5}}>
+              <View>
+              <TouchableOpacity style={{zIndex:5}}
+              onPress={()=>this.props.navigation.navigate('ShowUserProfile',{ to_user_id:this.state.to_user_id})} >
               <Avatar
                size='medium'
+     
                rounded
                source={{
                  uri:this.props.route.params.Image }}/>
-                 </TouchableOpacity>}
+                 </TouchableOpacity>
+                 </View>}
            />
 
         <View style={styles.messages}>

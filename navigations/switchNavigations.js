@@ -13,7 +13,8 @@ import FilterScreen from '../screens/homeScreens/filterScreen';
 import Bookdetalies from '../screens/homeScreens/bookdetalis'
 import FilterResultScreen from '../screens/homeScreens/FilterResultScreen';
 import MessageScreen from '../screens/chatScreeens/message';
-import Sendmessage from '../screens/chatScreeens/sendmessage'
+import Sendmessage from '../screens/chatScreeens/sendmessage';
+import ShowUserProfile from '../screens/chatScreeens/showUserprofile'
 
 import MyBooks from '../screens/acountScreens/myBooks';
 import MyProfile from '../screens/acountScreens/myProfile';
@@ -32,7 +33,7 @@ import EditProfile from '../screens/acountScreens/editProfile'
 
 const RootStack =createStackNavigator();
 export default function ChatStckNavigations() {
-const [userId,SetUserId]=useState('');
+
   return (
     <NavigationContainer >
     <RootStack.Navigator>
@@ -41,18 +42,13 @@ const [userId,SetUserId]=useState('');
       <RootStack.Screen name="SignUpScreens" component={SignUpScreens} options={{headerShown:false}}/>
       <RootStack.Screen name="Tabnavigation" component={Tabnavigation} options={{headerShown:false}} />
      
-      <RootStack.Screen name="SearchScreen" component={SearchScreen}  options={{
-          header: () => null,
-        }}/>
-      <RootStack.Screen name="FilterResultScreen" component={FilterResultScreen}  options={{
-          header: () => null,
-        }}/>
-      
-      <RootStack.Screen name="FilterScreen" component={FilterScreen}
-        options={{headerShown:false}} />
+     
+      <RootStack.Screen name="SearchScreen" component={SearchScreen}  options={{header: () => null,}}/>
+      <RootStack.Screen name="FilterResultScreen" component={FilterResultScreen}  options={{ header: () => null, }}/>
+      <RootStack.Screen name="FilterScreen" component={FilterScreen}options={{headerShown:false}} />
       <RootStack.Screen name="Bookdetalies" component={Bookdetalies}
       options={({route})=>({
-        headerBackTitleVisible:false,
+      headerBackTitleVisible:false,
         headerTitle:false,
         headerTransparent:true,
         headerTintColor:'#08d4c4'
@@ -60,24 +56,13 @@ const [userId,SetUserId]=useState('');
         
       }/>
       
-      <RootStack.Screen name="MessageScreen" component={MessageScreen}
-       options={({route})=>({
-        headerBackTitleVisible:false,
-        headerTitle:true,
-        headerTransparent:true,
-        headerTintColor:'#fff'
-      })}/>
+      <RootStack.Screen name="MessageScreen" component={MessageScreen}  options={{headerShown:false}}/>
+      <RootStack.Screen name="Sendmessage" component={Sendmessage}  options={{headerShown:false}} />
+      <RootStack.Screen name="ShowUserProfile" component={ShowUserProfile}  options={{headerShown:false}} />
+
       
-      <RootStack.Screen name="Sendmessage" component={Sendmessage}
-       options={({route})=>({
-        headerBackTitleVisible:false,
-        headerTitle:true,
-        headerTransparent:true,
-        headerTintColor:'#fff'
-      })}/>
      
-      <RootStack.Screen name="MyBooks" component={MyBooks} 
-       options={{headerShown:false}} />
+      <RootStack.Screen name="MyBooks" component={MyBooks} options={{headerShown:false}} />
       <RootStack.Screen name="BookShow" component={BookShow}
        options={({route})=>({
         headerBackTitleVisible:false,
@@ -86,12 +71,10 @@ const [userId,SetUserId]=useState('');
         headerTintColor:'rgba(0,0,0,0.8)'
       })}  />
       <RootStack.Screen name="MyProfile" component={MyProfile}  options={{headerShown:false}}   />
-      <RootStack.Screen name="Feedback" component={Feedback} 
-      options={{headerShown:false}}  />
+      <RootStack.Screen name="Feedback" component={Feedback} options={{headerShown:false}}  />
       <RootStack.Screen name="Wish" component={Wish}   options={{headerShown:false}} />
       <RootStack.Screen name="Edit" component={Edit}  options={{headerShown:false}}  />
-      <RootStack.Screen name="HelpAndSuport" component={HelpAndSuport}
-           options={{headerShown:false}} />
+      <RootStack.Screen name="HelpAndSuport" component={HelpAndSuport}options={{headerShown:false}} />
       <RootStack.Screen name="EditProfile" component={EditProfile} options={{headerShown:false}}   />
      </RootStack.Navigator>
     </NavigationContainer>

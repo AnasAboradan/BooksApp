@@ -22,13 +22,15 @@ class Home extends Component {
 
     this.getBookinf();
     this.focusListener = this.props.navigation.addListener('focus', () => {
-    this.getBookinf();
-    });
+     this.componentWillUnmount();
+      });
     
   }
+  componentWillUnmount() {
+    this.getBookinf();
+  }
 
-
-  getBookinf() {
+  async getBookinf() {
    
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
@@ -37,6 +39,7 @@ class Home extends Component {
       }
 
       if (request.status === 200) {
+        this.setState({ Data:[]})
         var data = JSON.parse(request.responseText);
         this.setState({ Data: data })
         console.log('1')
@@ -44,8 +47,8 @@ class Home extends Component {
       }
     };
 
-    request.open('GET', 'http://10.0.2.2:80/Api/getBokinfo.php');
-    request.send();
+  await  request.open('GET', 'http://10.0.2.2:80/Api/getBokinfo.php');
+  await request.send();
 
   }
   render() {
